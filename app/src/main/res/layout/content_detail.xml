@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".DetailActivity"
+    tools:showIn="@layout/activity_detail">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+
+        android:orientation="horizontal"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/productdetailImg"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder" />
+
+            <TextView
+                android:id="@+id/gialabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameTxt"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="15dp"
+                android:text="Giá :"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/giaTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/gialabel"
+                android:layout_marginLeft="0dp"
+                android:layout_toRightOf="@+id/gialabel"
+                android:paddingLeft="0dp"
+                android:text="VND"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/productdetailImg"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:text="Thông tin"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/namelable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:text="Tên thức uống:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/nameTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile"
+                android:layout_alignTop="@+id/namelable"
+                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@+id/namelable"
+                android:paddingLeft="5dp"
+                android:text="abc"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
