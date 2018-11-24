@@ -53,8 +53,8 @@ class LoginActivity : AppCompatActivity() {
         val etUser = findViewById(R.id.userEditText) as TextView
         val etPass = findViewById(R.id.passwordEditText) as TextView
         val btnDangNhap = findViewById(R.id.loginButton) as Button
-        etPass.setText("admin");
-        etUser.setText("admin")
+        etPass.setText("1");
+        etUser.setText("nvpv")
         btnDangNhap.setOnClickListener(
                 View.OnClickListener {
                     val stringUsername = etUser.text.toString();
