@@ -4,6 +4,16 @@ public class SanPham {
     private int id;
     private String tensp, gia, imgurl;
 
+    public boolean isAddedTocart() {
+        return addedTocart;
+    }
+
+    public void setAddedTocart(boolean addedTocart) {
+        this.addedTocart = addedTocart;
+    }
+
+    private boolean addedTocart = false;
+
     public int getId() {
         return id;
     }

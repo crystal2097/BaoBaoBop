@@ -3,7 +3,9 @@ package com.example.hoang.masterdetail_listview_sample.RecyclerAdapter_order;
 
 import android.content.Context;
 import android.media.Image;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +13,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.hoang.masterdetail_listview_sample.Interface.ItemClickListener;
 import com.example.hoang.masterdetail_listview_sample.OrderActivity;
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
 import com.example.hoang.masterdetail_listview_sample.R;
+import com.example.hoang.masterdetail_listview_sample.Interface.AddorRemoveCallbacks;
 
 //import com.example.codingmounrtain.addtocartbadgecount.interfaces.AddorRemoveCallbacks;
 
@@ -25,26 +30,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
-
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>  {
 
     ArrayList<SanPham> productsList;
     Context mContext;
 
-
-
     public RecyclerAdapter()
     {
-
     }
 
     public RecyclerAdapter(Context mContext,ArrayList<SanPham> productsList)
     {
         this.mContext=mContext;
         this.productsList=productsList;
-
     }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -57,29 +56,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         holder.productName.setText(productsList.get(position).getTensp());
         Picasso.get().load(productsList.get(position).getImgurl()).centerCrop().resize(400,400).into(holder.productImage);
-//      holder.productImage.setImageResource(productsList.get(position).getImgurl());
         holder.productPrice.setText(productsList.get(position).getGia());
-//        holder.addRemoveBt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(!productsList.get(position).isAddedTocart())
-//                {
-//                    productsList.get(position).setAddedTocart(true);
-//                    holder.addRemoveBt.setText("Remove");
-//                    if(mContext instanceof MainActivity)
-//                    {
-//                        ((AddorRemoveCallbacks)mContext).onAddProduct();
-//                    }
-//
-//                }
-//                else
-//                {
-//                    productsList.get(position).setAddedTocart(false);
-//                    holder.addRemoveBt.setText("Add");
-//                    ((AddorRemoveCallbacks)mContext).onRemoveProduct();
-//                }
-//            }
-//        });
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                if(isLongClick) {
+                    ((AddorRemoveCallbacks)mContext).onRemoveProduct();
+                    Log.d("remove","test");
+                }
+                    else
+                    productsList.get(position).setAddedTocart(true);
+                    if(mContext instanceof OrderActivity)
+                    {
+                        ((AddorRemoveCallbacks)mContext).onAddProduct();
+                    }
+
+            }
+        });
 
     }
 
@@ -88,11 +82,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return productsList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
 
         ImageView productImage;
         TextView productName;
         TextView productPrice;
+        RecyclerView recycler;
+        private ItemClickListener itemClickListener;
 
 
         public MyViewHolder(View itemView) {
@@ -100,6 +96,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             productImage=(ImageView) itemView.findViewById(R.id.productImageView);
             productName=(TextView) itemView.findViewById(R.id.productNameTv);
             productPrice=(TextView)itemView.findViewById(R.id.productPriceTv);
+            recycler = (RecyclerView) itemView.findViewById(R.id.recyclerview);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+        public void setItemClickListener(ItemClickListener itemClickListener)
+        {
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v,getAdapterPosition(),false);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            itemClickListener.onClick(v,getAdapterPosition(),true);
+            return true;
         }
     }
 }

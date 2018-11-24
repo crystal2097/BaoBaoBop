@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,6 +20,7 @@ import android.os.AsyncTask;
 
 import com.example.hoang.masterdetail_listview_sample.DataObject.LoaiSanPham;
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
+import com.example.hoang.masterdetail_listview_sample.Interface.AddorRemoveCallbacks;
 import com.example.hoang.masterdetail_listview_sample.RecyclerAdapter_order.RecyclerAdapter;
 
 import org.json.JSONArray;
@@ -37,7 +40,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
-public class OrderActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity implements AddorRemoveCallbacks {
     Toolbar toolbar;
     TabLayout tabLayout;
     SharedPreferences preferences;
@@ -106,10 +109,23 @@ public class OrderActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         new JsonTask_getsp().execute("https://dochibao1997.000webhostapp.com/displayprofile.php");
 
+    }
+    @Override
+    public void onAddProduct() {
+        cart_count++;
+        invalidateOptionsMenu();
+        Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã thêm vào hóa đơn", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
 
 
+    }
 
-
+    @Override
+    public void onRemoveProduct() {
+        cart_count--;
+        invalidateOptionsMenu();
+        Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã xóa khỏi hóa đơn ", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
 
     }
 
