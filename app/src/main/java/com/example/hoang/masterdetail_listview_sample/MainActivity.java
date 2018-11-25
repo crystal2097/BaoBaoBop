@@ -1,5 +1,6 @@
 package com.example.hoang.masterdetail_listview_sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,7 +13,7 @@ import com.example.hoang.masterdetail_listview_sample.MySQL.Downloader;
 
 public class MainActivity extends AppCompatActivity {
 
-    final static String urlAddress = "https://dochibao1997.000webhostapp.com/displayprofile.php";
+    final static String urlAddress = "http://192.168.1.5/QLTS/displayprofile.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +27,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        Xu ly su kien Floating Button
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new Downloader(MainActivity.this,urlAddress,lv).execute();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent i= new Intent(getApplicationContext(),InsertMenu.class);
+               startActivity(i);
+            }
+        });
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        final ListView lv = (ListView) findViewById(R.id.lv);
+        new Downloader(MainActivity.this, urlAddress, lv).execute();
+
+    }
+
 
 }
