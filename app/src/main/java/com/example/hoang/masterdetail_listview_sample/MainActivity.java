@@ -13,7 +13,7 @@ import com.example.hoang.masterdetail_listview_sample.MySQL.Downloader;
 
 public class MainActivity extends AppCompatActivity {
 
-    final static String urlAddress = "http://192.168.1.5/QLTS/displayprofile.php";
+    final static String urlAddress = "https://dochibao1997.000webhostapp.com/displayprofile.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
