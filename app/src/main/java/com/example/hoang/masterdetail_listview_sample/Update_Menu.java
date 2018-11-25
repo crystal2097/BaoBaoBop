@@ -48,7 +48,7 @@ Button btnUpdate,btnDelete;
                 }else
                 {
                     Ion.with(Update_Menu.this)
-                            .load("http://192.168.1.5/QLTS/updatemenu.php")
+                            .load("https://dochibao1997.000webhostapp.com/updatemenu.php")
                             .setLogging("LOIUpdate", Log.DEBUG)
                             .setBodyParameter("name", name)
                             .setBodyParameter("gia", gia)
@@ -76,7 +76,7 @@ Button btnUpdate,btnDelete;
             public void onClick(View v) {
                 String masp=String.valueOf(id);
                 Ion.with(Update_Menu.this)
-                        .load("http://192.168.1.5/QLTS/deletemenu.php")
+                        .load("https://dochibao1997.000webhostapp.com/deletemenu.php")
                         .setLogging("LOIUpdate", Log.DEBUG)
                         .setBodyParameter("id",masp)
                         .asJsonObject()

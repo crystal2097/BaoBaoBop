@@ -41,7 +41,7 @@ public class InsertMenu extends AppCompatActivity {
                 } else {
 
                     Ion.with(InsertMenu.this)
-                            .load("http://192.168.1.5/QLTS/insertmenu.php")
+                            .load("https://dochibao1997.000webhostapp.com/insertmenu.php")
                             .setLogging("LOIQUANGI", Log.DEBUG)
                             .setBodyParameter("name", name)
                             .setBodyParameter("gia", gia)
