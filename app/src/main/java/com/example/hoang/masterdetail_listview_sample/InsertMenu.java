@@ -54,7 +54,7 @@ public class InsertMenu extends AppCompatActivity {
                                     if(result.get("result").getAsString().equals("Ok")){
                                         Toast.makeText(InsertMenu.this,"Thêm thành công",Toast.LENGTH_SHORT).show();
                                     }else{
-                                        Toast.makeText(InsertMenu.this,"Ngu nhu bo",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(InsertMenu.this,"Không thành công",Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

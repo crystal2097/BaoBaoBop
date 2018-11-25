@@ -57,17 +57,18 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 //OPEN Detail Master
-                openDetailActivity(s.getTensp(), s.getImgurl(), s.getGia());
+                openDetailActivity(s.getId(),s.getTensp(), s.getImgurl(), s.getGia());
             }
         });
         return view;
     }
 
     //Open Detail Activity
-    private void openDetailActivity(String tensp, String imgurl, String giasp) {
+    private void openDetailActivity(int id,String tensp, String imgurl, String giasp) {
         Intent i = new Intent(c, DetailActivity.class);
 
         //Data
+        i.putExtra("ID",id);
         i.putExtra("TENMON_KEY", tensp);
         i.putExtra("IMGURL_KEY", imgurl);
         i.putExtra("GIA_KEY", giasp);

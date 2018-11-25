@@ -12,11 +12,14 @@ import android.widget.Toolbar;
 
 import com.example.hoang.masterdetail_listview_sample.R;
 import com.example.hoang.masterdetail_listview_sample.UI.PicassoClient;
+import com.example.hoang.masterdetail_listview_sample.Update_Menu;
 
 public class DetailActivity extends AppCompatActivity {
     TextView nameTxt;
     ImageView img;
     TextView gia;
+    String namep,price,pic;
+    int masp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,9 @@ public class DetailActivity extends AppCompatActivity {
         gia = (TextView) findViewById(R.id.giaTxt);
         //Recieve Data
         Intent i = this.getIntent();
-        String name = ((Intent) i).getExtras().getString("TENMON_KEY");
-        String imgurl = ((Intent) i).getExtras().getString("IMGURL_KEY");
+        final int id=i.getExtras().getInt("ID");
+        final String name = ((Intent) i).getExtras().getString("TENMON_KEY");
+        final String imgurl = ((Intent) i).getExtras().getString("IMGURL_KEY");
         String giasp = i.getExtras().getString("GIA_KEY");
         //BIND
         nameTxt.setText(name);
@@ -42,10 +46,18 @@ public class DetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent= new Intent(DetailActivity.this,Update_Menu.class);
+                masp=id;
+                namep=nameTxt.getText().toString();
+                price=gia.getText().toString();
+                pic=imgurl;
+                intent.putExtra("Tenmon_key", namep);
+                intent.putExtra("Gia_key",price);
+                intent.putExtra("IMG_Key",pic);
+                intent.putExtra("ID_Key",masp);
+                startActivity(intent);
+                finish();
             }
         });
-
     }
 }

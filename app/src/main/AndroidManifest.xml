@@ -30,7 +30,8 @@
         <activity
             android:name=".OrderActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-        <activity android:name=".InsertMenu"></activity>
+        <activity android:name=".InsertMenu" />
+        <activity android:name=".Update_Menu"></activity>
     </application>
 
 </manifest>
