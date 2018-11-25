@@ -41,8 +41,6 @@ public class BackgroundActivity extends AsyncTask<String, Void, String> {
         editor.commit();
         String urlLogin = "https://dochibao1997.000webhostapp.com/QLTS-Login.php";
         String task = strings[0];
-        Log.d("weblog", strings[0] + strings[1] + strings[2]);
-        Log.d("task", task);
 
         if (task.equals("Login")) {
             String loginUser = strings[1];

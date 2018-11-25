@@ -18,6 +18,7 @@ import android.view.*;
 import android.app.ActionBar;
 import android.os.AsyncTask;
 
+
 import com.example.hoang.masterdetail_listview_sample.DataObject.LoaiSanPham;
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
 import com.example.hoang.masterdetail_listview_sample.Interface.AddorRemoveCallbacks;
@@ -44,6 +45,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
     Toolbar toolbar;
     TabLayout tabLayout;
     SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     private static int cart_count=0;
     ProgressDialog pd;
     int intScene = 0;
@@ -298,7 +300,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
                     sanPham.setId(id);
                     sanPham.setTensp(tensp);
                     sanPham.setImgurl(imgurl);
-                    sanPham.setGia(gia);
+                    sanPham.setGia(gia.concat(" VND"));
                     sanPhams.add(sanPham);
                 }
                 mAdapter = new RecyclerAdapter(OrderActivity.this,sanPhams);
