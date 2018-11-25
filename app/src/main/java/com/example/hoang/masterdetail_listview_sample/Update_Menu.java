@@ -77,7 +77,7 @@ Button btnUpdate,btnDelete;
                 String masp=String.valueOf(id);
                 Ion.with(Update_Menu.this)
                         .load("https://dochibao1997.000webhostapp.com/deletemenu.php")
-                        .setLogging("LOIUpdate", Log.DEBUG)
+                        .setLogging("LOIDelete", Log.DEBUG)
                         .setBodyParameter("id",masp)
                         .asJsonObject()
                         .setCallback(new FutureCallback<JsonObject>() {
