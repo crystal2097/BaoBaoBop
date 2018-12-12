@@ -1,6 +1,7 @@
 package com.example.hoang.masterdetail_listview_sample;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -128,11 +129,14 @@ public class BackgroundActivity extends AsyncTask<String, Void, String> {
                 if (quyen.equals("0")) {
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
+                    ((Activity) context).finish();
+
                 }
                 // Quyen nhan vien phuc vu
                 if (quyen.equals("1")) {
                     Intent intent = new Intent(context, OrderActivity.class);
                     context.startActivity(intent);
+                    ((Activity) context).finish();
                 }
                 // Quyen nhan vien order
             } else {

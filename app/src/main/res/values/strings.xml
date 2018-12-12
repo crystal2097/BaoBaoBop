@@ -6,13 +6,16 @@
     <string name="welcome">Welcome to BaoBaoBop</string>
     <string name="skip">Skip</string>
     <string name="login">Đăng nhập</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="help">Giúp đỡ</string>
     <string name="user">User</string>
     <string name="password">Password</string>
     <string name="sign_up">Sign up</string>
     <string name="forget_password">Quên mật khẩu?</string>
     <string name="loginfailed">Đăng nhập thất bại...</string>
     <string name="pleasewait">Vui lòng chờ</string>
-
+    <string name="quantity">Số lượng :</string>
+    <string name="checkout">Hoá đơn</string>
 
     <string name="cart">Hóa đơn</string>
     <!--Navigation drawer-->

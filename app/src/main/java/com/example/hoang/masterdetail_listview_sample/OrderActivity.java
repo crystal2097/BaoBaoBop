@@ -1,51 +1,45 @@
 package com.example.hoang.masterdetail_listview_sample;
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.view.*;
-import android.app.ActionBar;
 import android.os.AsyncTask;
+import android.content.Context;
 
 
 import com.example.hoang.masterdetail_listview_sample.DataObject.LoaiSanPham;
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
 import com.example.hoang.masterdetail_listview_sample.Interface.AddorRemoveCallbacks;
-import com.example.hoang.masterdetail_listview_sample.RecyclerAdapter_order.RecyclerAdapter;
+import com.example.hoang.masterdetail_listview_sample.RecyclerAdapter.RecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
 public class OrderActivity extends AppCompatActivity implements AddorRemoveCallbacks {
     Toolbar toolbar;
     TabLayout tabLayout;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
+    Context context;
     private static int cart_count=0;
     ProgressDialog pd;
     int intScene = 0;
@@ -55,6 +49,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
     RecyclerAdapter mAdapter;
     ArrayList<LoaiSanPham> loaiSanPhams = new ArrayList<>();
     ArrayList<SanPham> sanPhams = new ArrayList<>();
+    ArrayList<SanPham> itemcart = new ArrayList<>();
 
 
     @Override
@@ -95,6 +90,20 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
 
     }
 
+    // Start activity cart
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cart_action:
+                Intent intent = new Intent(this, CartActivity.class);
+                intent.putParcelableArrayListExtra("itemcart", itemcart);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_manu, menu);
@@ -113,22 +122,40 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
 
     }
     @Override
-    public void onAddProduct() {
+    public void onAddProduct(int maSP) {
         cart_count++;
         invalidateOptionsMenu();
-        Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã thêm vào hóa đơn", Snackbar.LENGTH_LONG)
+
+        SanPham sanPham = new SanPham();
+        sanPham = sanPhams.get(maSP);
+        if (sanPham.getSoluong() >= 1) {
+            sanPham.setSoluong(sanPham.getSoluong() + 1);
+            sanPhams.set(maSP, sanPham);
+            int IDcartitem = sanPham.getId();
+            for (SanPham sanPham1 : sanPhams) {
+                if (sanPham1.getId() == IDcartitem) {
+                    itemcart.indexOf(sanPham1);
+                }
+            }
+        } else {
+            sanPham.setSoluong(1);
+            sanPhams.set(maSP, sanPham);
+            itemcart.add(sanPham);
+        }
+
+
+        Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã thêm vào hóa đơn " + sanPham.getSoluong(), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
-
-
     }
 
     @Override
-    public void onRemoveProduct() {
-        cart_count--;
-        invalidateOptionsMenu();
-        Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã xóa khỏi hóa đơn ", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-
+    public void onRemoveProduct(int maSP) {
+        if (cart_count != 0) {
+            cart_count--;
+            invalidateOptionsMenu();
+            Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã xóa khỏi hóa đơn ", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 
     private class JsonTask_getloaisp extends AsyncTask <String, String, String> {
@@ -231,7 +258,6 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
 
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         protected String doInBackground(String... params) {
@@ -244,23 +270,15 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-
-
                 InputStream stream = connection.getInputStream();
-
                 reader = new BufferedReader(new InputStreamReader(stream));
-
                 StringBuffer buffer = new StringBuffer();
                 String line = "";
-
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line+"\n");
                     Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
                 }
-
                 return buffer.toString();
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -283,9 +301,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             //Display loaisp
-
             try {
                 JSONArray ja = new JSONArray(result);
                 JSONObject jo;
@@ -301,6 +317,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
                     sanPham.setTensp(tensp);
                     sanPham.setImgurl(imgurl);
                     sanPham.setGia(gia.concat(" VND"));
+                    sanPham.setSoluong(0);
                     sanPhams.add(sanPham);
                 }
                 mAdapter = new RecyclerAdapter(OrderActivity.this,sanPhams);

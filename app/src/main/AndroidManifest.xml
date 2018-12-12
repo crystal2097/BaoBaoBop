@@ -30,6 +30,7 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".InsertMenu" />
         <activity android:name=".Update_Menu"></activity>
+        <activity android:name=".CartActivity"></activity>
     </application>
 
 </manifest>
