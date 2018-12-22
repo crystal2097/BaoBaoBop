@@ -51,6 +51,8 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
     RecyclerAdapter mAdapter;
     public static int OPEN_NEW_ACTIVITY = 1;
     SharedPreferences Cartketqua;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor2;
     SharedPreferences.Editor editor;
     ArrayList<LoaiSanPham> loaiSanPhams = new ArrayList<>();
     ArrayList<SanPham> sanPhams = new ArrayList<>();
@@ -61,8 +63,10 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         Cartketqua = this.getSharedPreferences("CART_KQ", Context.MODE_PRIVATE);
+        preferences = this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
         initDrawer();
         editor = Cartketqua.edit();
+
         initProduct();
     }
 
@@ -91,6 +95,15 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
                 intent.putParcelableArrayListExtra("itemcart", itemcart);
                 startActivityForResult(intent, OPEN_NEW_ACTIVITY);
                 return true;
+            case R.id.logout:
+                editor2 = preferences.edit();
+                editor2.clear();
+                editor2.apply();
+
+
+                Intent intent2 = new Intent(this, LoginActivity.class);
+                startActivity(intent2);
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -104,6 +117,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
             if (KQ.equals("OK")) {
                 itemcart.clear();
                 editor.clear();
+                editor.apply();
                 cart_count = 0;
                 invalidateOptionsMenu();
             }
@@ -116,6 +130,9 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         getMenuInflater().inflate(R.menu.main_manu, menu);
         MenuItem menuItem = menu.findItem(R.id.cart_action);
         menuItem.setIcon(OrderConverter.convertLayoutToImage(OrderActivity.this,cart_count,R.drawable.ic_cart));
+        MenuItem menuItem2 = menu.findItem(R.id.logout);
+        menuItem2.setIcon(OrderConverter.convertLayoutToImage(OrderActivity.this,cart_count,R.drawable.ic_baseline_power_settings_new_24px));
+
         return true;
     }
 

@@ -35,7 +35,6 @@
             android:backgroundTint="@color/colorBackground"
             app:srcCompat="@drawable/ic_baseline_done_24px" />
 
-
         <include layout="@layout/cart_content_main" />
 
 

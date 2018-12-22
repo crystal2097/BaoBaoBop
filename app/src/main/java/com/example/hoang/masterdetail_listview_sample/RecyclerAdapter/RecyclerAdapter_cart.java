@@ -48,12 +48,9 @@ public class RecyclerAdapter_cart extends RecyclerView.Adapter<RecyclerAdapter_c
             public void onClick(View v) {
                 ((OrderAddSubClear) mContext).onAddProduct(position);
                 holder.txtSoLuong.setText(String.valueOf(productsList.get(position).getSoluong()));
-
                 holder.txtSubTotal.setText(String.valueOf(Integer.toString(SubTotalCalc(position))));
-
             }
         });
-
         holder.btnSubPro.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
