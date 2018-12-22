@@ -2,55 +2,99 @@ package com.example.hoang.masterdetail_listview_sample;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
+import com.example.hoang.masterdetail_listview_sample.Interface.OrderAddSubClear;
 import com.example.hoang.masterdetail_listview_sample.RecyclerAdapter.RecyclerAdapter_cart;
+import com.example.hoang.masterdetail_listview_sample.UI.Cart_sendJson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements OrderAddSubClear {
     Toolbar toolbar;
     ArrayList<SanPham> productsList;
+    SharedPreferences preferences;
+    SharedPreferences Cartketqua;
     RecyclerView mRecyclerView;
     RecyclerAdapter_cart mAdapter;
     Context context;
     Activity activity;
+    TextView txtSoLuong;
+    Float TongTien;
 
     FloatingActionButton fab;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+        Cartketqua = this.getSharedPreferences("CART_KQ", Context.MODE_PRIVATE);
         productsList = new ArrayList<SanPham>();
         setContentView(R.layout.activity_cart);
         context = this;
-
-        SanPham sp = new SanPham();
-        sp.setTensp("teest");
-        sp.setSoluong(2);
-        sp.setGia("1111");
-        sp.setImgurl("https://phannguyenkhanhdan.files.wordpress.com/2017/10/milktea-ryanradley.png");
-        sp.setId(1);
-
+        txtSoLuong = (TextView) findViewById(R.id.cart_Soluong);
         productsList = getIntent().getParcelableArrayListExtra("itemcart");
-
+        mRecyclerView = (RecyclerView) findViewById(R.id.cart_recyclerview);
         //Create float button -- comfirm order
         fab = (FloatingActionButton) findViewById(R.id.cart_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                JSONObject JSonObjcart = new JSONObject();
+                JSONArray JsonArrProducts = new JSONArray();
+                JSONArray JSonArrcart = new JSONArray();
+
+                try {
+                    JSonObjcart.put("User", preferences.getString("user", "Error getting user"));
+
+                    for (int i = 0; i < productsList.size(); i++) {
+                        JSONObject JSonObjProduct = new JSONObject();
+                        JSonObjProduct.put("ID", productsList.get(i).getId());
+                        JSonObjProduct.put("SoLuong", productsList.get(i).getSoluong());
+                        JSonObjProduct.put("Gia", SubString(productsList.get(i).getGia()));
+                        JsonArrProducts.put(JSonObjProduct);
+
+                    }
+                    JSONObject jsonObjectAllProducts = new JSONObject();
+                    jsonObjectAllProducts.put("Products", JsonArrProducts);
+                    JSonArrcart.put(JSonObjcart);
+                    JSonArrcart.put(jsonObjectAllProducts);
+                } catch (JsonIOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                //send to php
+                Cart_sendJson cart_sendJson = new Cart_sendJson(context);
+                //cart_sendJson.execute(JSonArrcart);
+                Object result = cart_sendJson.execute(JSonArrcart).getStatus();
+
+                if (Cartketqua.getString("Ketqua", "Fail").equals("OK")) {
+
+                    finish();
+                }
             }
         });
 
@@ -82,11 +126,30 @@ public class CartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void setAdd(Integer position) {
-//        Integer a = productsList.get(position).getSoluong();
-//        productsList.get(position).setSoluong(a++);
-//        mAdapter.notifyDataSetChanged();
-//    }
+
+    @Override
+    public void onAddProduct(int Pos) {
+        productsList.get(Pos).setSoluong(productsList.get(Pos).getSoluong() + 1);
+    }
+
+    @Override
+    public void onSubProduct(int Pos) {
+        if ((productsList.get(Pos).getSoluong() - 1) != 0)
+            productsList.get(Pos).setSoluong(productsList.get(Pos).getSoluong() - 1);
+    }
+
+    @Override
+    public void onRemoveProduct(int Pos) {
+    }
+
+    public float SubString(String string) {
+        String[] split = string.split("VND");
+        String firstSubString = split[0].substring(0, split[0].length() - 1);
+        return Integer.parseInt(firstSubString);
+    }
+
 }
+
+
+
 

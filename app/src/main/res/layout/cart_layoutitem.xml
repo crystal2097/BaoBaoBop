@@ -99,7 +99,7 @@
             android:layout_gravity="center">
 
             <ImageButton
-                android:id="@+id/cart_buttonRemove"
+                android:id="@+id/cart_buttonSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -168,7 +168,7 @@
         android:layout_height="20dp" />
 
     <TextView
-        android:id="@+id/subtotal"
+        android:id="@+id/cart_subtotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

@@ -2,6 +2,7 @@ package com.example.hoang.masterdetail_listview_sample;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,7 @@ import com.example.hoang.masterdetail_listview_sample.DataObject.LoaiSanPham;
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
 import com.example.hoang.masterdetail_listview_sample.Interface.AddorRemoveCallbacks;
 import com.example.hoang.masterdetail_listview_sample.RecyclerAdapter.RecyclerAdapter;
+import com.example.hoang.masterdetail_listview_sample.UI.Cart_sendJson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,29 +49,21 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
     SanPham sanPham;
     RecyclerView mRecyclerView;
     RecyclerAdapter mAdapter;
+    public static int OPEN_NEW_ACTIVITY = 1;
+    SharedPreferences Cartketqua;
+    SharedPreferences.Editor editor;
     ArrayList<LoaiSanPham> loaiSanPhams = new ArrayList<>();
     ArrayList<SanPham> sanPhams = new ArrayList<>();
     ArrayList<SanPham> itemcart = new ArrayList<>();
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-//        user = (TextView) findViewById(R.id.user);
-//        quyen = (TextView) findViewById(R.id.quyen);
-//        preferences = this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
-//
-//        String mUser = preferences.getString("user", "Error getting user");
-//        Log.d("Orderactivi", preferences.getString("user", "t"));
-//        String mQuyen = preferences.getString("quyen", "Error getting quyen");
-//        user.setText(mUser);
-//        quyen.setText(mQuyen);
+        Cartketqua = this.getSharedPreferences("CART_KQ", Context.MODE_PRIVATE);
         initDrawer();
+        editor = Cartketqua.edit();
         initProduct();
-
-
-
     }
 
     @Override
@@ -83,9 +77,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         toolbar = (Toolbar) findViewById(R.id.order_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Order");
-
         tabLayout = (TabLayout) findViewById(R.id.order_tablayout);
-
         new JsonTask_getloaisp().execute("https://dochibao1997.000webhostapp.com/Order-SelectLoaiSP.php");
 
     }
@@ -97,10 +89,25 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
             case R.id.cart_action:
                 Intent intent = new Intent(this, CartActivity.class);
                 intent.putParcelableArrayListExtra("itemcart", itemcart);
-                startActivity(intent);
+                startActivityForResult(intent, OPEN_NEW_ACTIVITY);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == OPEN_NEW_ACTIVITY) {
+            String KQ = Cartketqua.getString("Ketqua", "Fail");
+
+            if (KQ.equals("OK")) {
+                itemcart.clear();
+                editor.clear();
+                cart_count = 0;
+                invalidateOptionsMenu();
+            }
+
         }
     }
 
