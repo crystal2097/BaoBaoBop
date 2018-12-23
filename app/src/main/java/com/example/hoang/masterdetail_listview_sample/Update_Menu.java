@@ -87,7 +87,7 @@ public class Update_Menu extends AppCompatActivity {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Sửa thành công", Toast.LENGTH_LONG).show();
                         finish();
 
                     }
