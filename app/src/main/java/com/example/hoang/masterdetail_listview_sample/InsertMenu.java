@@ -39,11 +39,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InsertMenu extends AppCompatActivity {
-    EditText editName, editGia, editImgUrl;
+    EditText editName, editGia;
     ImageView imageUpload;
     Button btninsertsp,btnchoose,btnuploadIMG;
     final int CODE_GALLERY_REQUEST=999;
-    String urlUpload="https://dochibao1997.000webhostapp.com/upload.php";
+    String urlUpload="https://dochibao1997.000webhostapp.com/insertmenu2.php";
     Bitmap bitmap;
 
     @Override
@@ -53,7 +53,6 @@ public class InsertMenu extends AppCompatActivity {
 
         editName = (EditText) findViewById(R.id.etName);
         editGia = (EditText) findViewById(R.id.etGia);
-        editImgUrl = (EditText) findViewById(R.id.etIMGURL);
         imageUpload=(ImageView) findViewById(R.id.imageUpload);
 
         ////
@@ -61,11 +60,14 @@ public class InsertMenu extends AppCompatActivity {
         btnuploadIMG.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
+                                               final String name = editName.getText().toString();
+                                               final String gia = editGia.getText().toString();
                                                 //post img to sv
                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
                                                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                                                        finish();
 
                                                     }
                                                 }, new Response.ErrorListener() {
@@ -79,6 +81,8 @@ public class InsertMenu extends AppCompatActivity {
                                                     protected Map<String, String> getParams() throws AuthFailureError {
                                                         Map<String, String> params = new HashMap<>();
                                                         String imageData = imageToString(bitmap);
+                                                        params.put("name",name);
+                                                        params.put("gia",gia);
                                                         params.put("image", imageData);
                                                         return params;
                                                     }
@@ -104,42 +108,42 @@ public class InsertMenu extends AppCompatActivity {
         });
 
         /////
-        btninsertsp = (Button) findViewById(R.id.addsp);
-        btninsertsp.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String name = editName.getText().toString();
-                String gia = editGia.getText().toString();
-                String Imgurl = editImgUrl.getText().toString();
-                if (name.isEmpty() || (gia.isEmpty())) {
-                    Toast.makeText(InsertMenu.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                    editName.setError("Không có tên");
-                    editGia.setError("Không có giá");
-                } else {
-
-                    Ion.with(InsertMenu.this)
-                            .load("https://dochibao1997.000webhostapp.com/insertmenu.php")
-                            .setLogging("LOIQUANGI", Log.DEBUG)
-                            .setBodyParameter("name", name)
-                            .setBodyParameter("gia", gia)
-                            .setBodyParameter("imgurl", Imgurl)
-                            .asJsonObject()
-                            .setCallback(new FutureCallback<JsonObject>() {
-                                @Override
-                                public void onCompleted(Exception e, JsonObject result) {
-
-                                    if(result.get("result").getAsString().equals("Ok")){
-                                        Toast.makeText(InsertMenu.this,"Thêm thành công",Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }else{
-                                        Toast.makeText(InsertMenu.this,"Không thành công",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-            }
-        });
+//        btninsertsp = (Button) findViewById(R.id.addsp);
+//        btninsertsp.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                String name = editName.getText().toString();
+//                String gia = editGia.getText().toString();
+//                String Imgurl = editImgUrl.getText().toString();
+//                if (name.isEmpty() || (gia.isEmpty())) {
+//                    Toast.makeText(InsertMenu.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+//                    editName.setError("Không có tên");
+//                    editGia.setError("Không có giá");
+//                } else {
+//
+//                    Ion.with(InsertMenu.this)
+//                            .load("https://dochibao1997.000webhostapp.com/insertmenu.php")
+//                            .setLogging("LOIQUANGI", Log.DEBUG)
+//                            .setBodyParameter("name", name)
+//                            .setBodyParameter("gia", gia)
+//                            .setBodyParameter("imgurl", Imgurl)
+//                            .asJsonObject()
+//                            .setCallback(new FutureCallback<JsonObject>() {
+//                                @Override
+//                                public void onCompleted(Exception e, JsonObject result) {
+//
+//                                    if(result.get("result").getAsString().equals("Ok")){
+//                                        Toast.makeText(InsertMenu.this,"Thêm thành công",Toast.LENGTH_SHORT).show();
+//                                        finish();
+//                                    }else{
+//                                        Toast.makeText(InsertMenu.this,"Không thành công",Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
+//                }
+//            }
+//        });
 
     }
 
