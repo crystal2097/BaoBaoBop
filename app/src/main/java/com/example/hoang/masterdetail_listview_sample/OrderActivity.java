@@ -64,8 +64,33 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         preferences = this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
         initDrawer();
         editor = Cartketqua.edit();
-
         initProduct();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() != 0) {
+                    ArrayList<SanPham> sanphamcopy = new ArrayList<>(sanPhams);
+                    for (int i = 0; i < sanphamcopy.size(); i++) {
+                        if (!sanphamcopy.get(i).getMaLoai().equals(Integer.toString(tab.getPosition()))) {
+                            sanphamcopy.remove(i);
+                        }
+                    }
+                    mAdapter = new RecyclerAdapter(OrderActivity.this, sanphamcopy);
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    mAdapter = new RecyclerAdapter(OrderActivity.this, sanPhams);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     @Override
@@ -97,8 +122,6 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
                 editor2 = preferences.edit();
                 editor2.clear();
                 editor2.apply();
-
-
                 Intent intent2 = new Intent(this, LoginActivity.class);
                 startActivity(intent2);
 
@@ -166,7 +189,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         }
 
 
-        Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã thêm vào hóa đơn " + sanPham.getSoluong(), Snackbar.LENGTH_LONG)
+        Snackbar.make(findViewById(R.id.drawer_design_support_layout), "Đã thêm vào hóa đơn ", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
@@ -332,12 +355,14 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
                     String tensp = jo.getString("TenMon");
                     String imgurl = jo.getString("IMG");
                     String gia = jo.getString("Gia");
+                    String maloai = jo.getString("MaLoai");
                     sanPham = new SanPham();
                     sanPham.setId(id);
                     sanPham.setTensp(tensp);
                     sanPham.setImgurl(imgurl);
                     sanPham.setGia(gia.concat(" VND"));
                     sanPham.setSoluong(0);
+                    sanPham.setMaLoai(maloai);
                     sanPhams.add(sanPham);
                 }
                 mAdapter = new RecyclerAdapter(OrderActivity.this,sanPhams);

@@ -60,7 +60,6 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
                 JSONObject JSonObjcart = new JSONObject();
                 JSONArray JsonArrProducts = new JSONArray();
                 JSONArray JSonArrcart = new JSONArray();
-
                 try {
                     JSonObjcart.put("User", preferences.getString("user", "Error getting user"));
 
@@ -84,12 +83,11 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
 
                 //send to php
                 Cart_sendJson cart_sendJson = new Cart_sendJson(context);
-                //cart_sendJson.execute(JSonArrcart);
-                Object result = cart_sendJson.execute(JSonArrcart).getStatus();
+                cart_sendJson.execute(JSonArrcart);
 
-                if (Cartketqua.getString("Ketqua", "Fail").equals("OK")) {
-                    finish();
-                }
+//                if (Cartketqua.getString("Ketqua", "Fail").equals("OK")) {
+//                    finish();
+//                }
             }
         });
 
@@ -112,6 +110,7 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
