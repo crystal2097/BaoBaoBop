@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context=".InsertMenu">
 
+    <ImageView
+        android:id="@+id/imageUpload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars[0]" />
+
     <EditText
         android:id="@+id/etName"
         android:hint="Tên sản phẩm:"
@@ -28,6 +34,11 @@
     <Button
         android:id="@+id/addsp"
         android:text="Insert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/chonanh"
+        android:text="Chọn ảnh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>
