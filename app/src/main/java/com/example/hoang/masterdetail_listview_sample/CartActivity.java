@@ -85,9 +85,7 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
                 Cart_sendJson cart_sendJson = new Cart_sendJson(context);
                 cart_sendJson.execute(JSonArrcart);
 
-//                if (Cartketqua.getString("Ketqua", "Fail").equals("OK")) {
-//                    finish();
-//                }
+
             }
         });
 

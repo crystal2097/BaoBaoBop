@@ -1,5 +1,6 @@
 package com.example.hoang.masterdetail_listview_sample.UI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,13 +9,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.hoang.masterdetail_listview_sample.R;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -27,7 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class Cart_sendJson extends AsyncTask<JSONArray, Void, String> {
+public class Cart_sendJson extends AsyncTask<JSONArray, Boolean, String> {
     Context context;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -107,6 +104,10 @@ public class Cart_sendJson extends AsyncTask<JSONArray, Void, String> {
         if (s.equals("OK")) {
             editor.putString("Ketqua", "OK");
             editor.commit();
+
+            if (preferences.getString("Ketqua", "Fail").equals("OK")) {
+                ((Activity) context).finish();
+            }
         } else {
             editor.putString("Ketqua", "Fail");
             editor.commit();

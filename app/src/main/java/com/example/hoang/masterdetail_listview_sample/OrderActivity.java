@@ -63,7 +63,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         Cartketqua = this.getSharedPreferences("CART_KQ", Context.MODE_PRIVATE);
         preferences = this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
         initDrawer();
-        editor = Cartketqua.edit();
+
         initProduct();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -134,11 +134,12 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == OPEN_NEW_ACTIVITY) {
             String KQ = Cartketqua.getString("Ketqua", "Fail");
-
             if (KQ.equals("OK")) {
                 itemcart.clear();
-                editor.clear();
-                editor.apply();
+                Cartketqua.edit().clear().apply();
+                for (int i = 0; i < sanPhams.size(); i++) {
+                    sanPhams.get(i).setSoluong(0);
+                }
                 cart_count = 0;
                 invalidateOptionsMenu();
             }
