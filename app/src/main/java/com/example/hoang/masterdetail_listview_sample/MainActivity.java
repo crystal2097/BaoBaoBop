@@ -3,9 +3,10 @@ package com.example.hoang.masterdetail_listview_sample;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -44,5 +45,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.daubep_main, menu);
+        MenuItem menuItem2 = menu.findItem(R.id.daubep_logout);
+        menuItem2.setIcon(R.drawable.ic_baseline_power_settings_new_24px);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.daubep_logout:
+                Intent intent2 = new Intent(this, LoginActivity.class);
+                startActivity(intent2);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

@@ -20,7 +20,9 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></android.support.v7.widget.Toolbar>
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            </android.support.v7.widget.Toolbar>
 
 
         </android.support.design.widget.AppBarLayout>
@@ -32,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:backgroundTint="@color/colorBackground"
+            android:backgroundTint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_baseline_done_24px" />
 
         <include layout="@layout/cart_content_main" />

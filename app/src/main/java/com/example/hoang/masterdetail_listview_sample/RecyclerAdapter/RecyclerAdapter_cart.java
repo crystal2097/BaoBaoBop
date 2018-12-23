@@ -1,7 +1,6 @@
 package com.example.hoang.masterdetail_listview_sample.RecyclerAdapter;
 
 import android.content.Context;
-import android.support.constraint.solver.SolverVariable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +64,7 @@ public class RecyclerAdapter_cart extends RecyclerView.Adapter<RecyclerAdapter_c
         holder.btnRemovePro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((OrderAddSubClear) mContext).onAddProduct(position);
+                ((OrderAddSubClear) mContext).onRemoveProduct(position);
                 removeAt(position);
 
             }

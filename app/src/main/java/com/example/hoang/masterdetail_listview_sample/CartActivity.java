@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -36,8 +37,8 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
     Context context;
     Activity activity;
     TextView txtSoLuong;
-    Float TongTien;
-
+    Integer TongTien = 0;
+    private Menu menu;
     FloatingActionButton fab;
 
     @Override
@@ -112,6 +113,29 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cart_tongtien, menu);
+        MenuItem menuItem2 = menu.findItem(R.id.cart_Tongtien);
+        for (int i = 0; i < productsList.size(); i++) {
+            int soLuong = productsList.get(i).getSoluong();
+            int Gia = SubString(productsList.get(i).getGia());
+            TongTien = TongTien + (soLuong * Gia);
+        }
+        menuItem2.setTitle(MenuTinhTong(TongTien));
+        this.menu = menu;
+        return true;
+    }
+
+    public String MenuTinhTong(int Tien) {
+        return "Tổng : ".concat(Integer.toString(TongTien)).concat(" VND");
+    }
+
+
+    private void updateMenuTitles(String Tien) {
+        MenuItem menuItem = menu.findItem(R.id.cart_Tongtien);
+        menuItem.setTitle(Tien);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -124,19 +148,23 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
     @Override
     public void onAddProduct(int Pos) {
         productsList.get(Pos).setSoluong(productsList.get(Pos).getSoluong() + 1);
+        TongTien = TongTien + SubString(productsList.get(Pos).getGia());
+        updateMenuTitles(MenuTinhTong(TongTien));
     }
 
     @Override
     public void onSubProduct(int Pos) {
         if ((productsList.get(Pos).getSoluong() - 1) != 0)
             productsList.get(Pos).setSoluong(productsList.get(Pos).getSoluong() - 1);
+        TongTien = TongTien - SubString(productsList.get(Pos).getGia());
+        updateMenuTitles(MenuTinhTong(TongTien));
     }
 
     @Override
     public void onRemoveProduct(int Pos) {
     }
 
-    public float SubString(String string) {
+    public int SubString(String string) {
         String[] split = string.split("VND");
         String firstSubString = split[0].substring(0, split[0].length() - 1);
         return Integer.parseInt(firstSubString);

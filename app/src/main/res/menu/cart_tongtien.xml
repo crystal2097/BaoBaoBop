@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/cart_Tongtien"
+        android:orderInCategory="99"
+        android:title="Tổng : 10000"
+        app:showAsAction="always" />
+
+</menu>
