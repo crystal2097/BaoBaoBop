@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context=".InsertMenu">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars[0]" />
+
     <EditText
         android:id="@+id/etName"
         android:hint="Tên sản phẩm:"
@@ -19,20 +25,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/etIMGURL"
-        android:hint="Link ảnh:"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-<RelativeLayout
+    <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/imgChoose"
+            android:text="Chọn ảnh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btnupdatemenu"
         android:text="Update"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgChoose"/>
     <Button
         android:id="@+id/btndelete"
         android:text="Delete"

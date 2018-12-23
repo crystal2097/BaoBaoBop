@@ -25,12 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/etIMGURL"
-        android:hint="Link ảnh:"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/chonanh"
         android:text="Chọn ảnh"

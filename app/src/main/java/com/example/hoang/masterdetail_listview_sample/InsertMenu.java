@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InsertMenu extends AppCompatActivity {
-    EditText editName, editGia, editImgUrl;
+    EditText editName, editGia;
     ImageView imageUpload;
     Button btninsertsp,btnchoose,btnuploadIMG;
     final int CODE_GALLERY_REQUEST=999;
@@ -53,7 +53,6 @@ public class InsertMenu extends AppCompatActivity {
 
         editName = (EditText) findViewById(R.id.etName);
         editGia = (EditText) findViewById(R.id.etGia);
-        editImgUrl = (EditText) findViewById(R.id.etIMGURL);
         imageUpload=(ImageView) findViewById(R.id.imageUpload);
 
         ////
