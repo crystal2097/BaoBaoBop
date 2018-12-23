@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,19 +20,32 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InsertMenu extends AppCompatActivity {
     EditText editName, editGia, editImgUrl;
     ImageView imageUpload;
-    Button btninsertsp,btnchoose;
+    Button btninsertsp,btnchoose,btnuploadIMG;
     final int CODE_GALLERY_REQUEST=999;
+    String urlUpload="https://dochibao1997.000webhostapp.com/upload.php";
+    Bitmap bitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +55,41 @@ public class InsertMenu extends AppCompatActivity {
         editGia = (EditText) findViewById(R.id.etGia);
         editImgUrl = (EditText) findViewById(R.id.etIMGURL);
         imageUpload=(ImageView) findViewById(R.id.imageUpload);
+
+        ////
+        btnuploadIMG=(Button) findViewById(R.id.btnuploadIMG);
+        btnuploadIMG.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                //post img to sv
+                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+
+                                                    }
+                                                }, new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        Toast.makeText(getApplicationContext(), "error" + error.toString(), Toast.LENGTH_LONG).show();
+
+                                                    }
+                                                }) {
+                                                    @Override
+                                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                                        Map<String, String> params = new HashMap<>();
+                                                        String imageData = imageToString(bitmap);
+                                                        params.put("image", imageData);
+                                                        return params;
+                                                    }
+                                                };
+                                                RequestQueue requestQueue = Volley.newRequestQueue(InsertMenu.this);
+                                                requestQueue.add(stringRequest);
+                                            }
+                                        });
+
+
+
         ////
         btnchoose=(Button) findViewById(R.id.chonanh);
         btnchoose.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +164,7 @@ public class InsertMenu extends AppCompatActivity {
             Uri filepath=data.getData();
             try {
                 InputStream inputStream=getContentResolver().openInputStream(filepath);
-                Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
+                bitmap= BitmapFactory.decodeStream(inputStream);
                 imageUpload.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -123,5 +172,12 @@ public class InsertMenu extends AppCompatActivity {
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    private String imageToString(Bitmap bitmap){
+        ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+        bitmap .compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+        byte[] imageBytes= outputStream.toByteArray();
+        String encodedImage= Base64.encodeToString(imageBytes,Base64.DEFAULT);
+        return encodedImage;
     }
 }
