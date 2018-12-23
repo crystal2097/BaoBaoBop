@@ -31,6 +31,8 @@
         <activity android:name=".InsertMenu" />
         <activity android:name=".Update_Menu"></activity>
         <activity android:name=".CartActivity"></activity>
+        <activity android:name=".DauBepActivity"></activity>
+
     </application>
 
 </manifest>

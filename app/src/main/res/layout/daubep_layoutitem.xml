@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/daubep_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="Anhtrasua"
+        android:src="@drawable/avatar" />
+
+    <TextView
+        android:id="@+id/daubep_txtmieuta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/daubep_avatar"
+        android:text="Tran chau"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/daubep_thoigian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/daubep_txtmieuta"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/daubep_avatar"
+        android:text="16:30 PM"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/daubep_Maorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/daubep_txtmieuta"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/daubep_thoigian"
+        android:text="MAoreder"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/daubep_txtsoluong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/daubep_done"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:text="12 ly"
+        android:textSize="20dp" />
+
+    <ImageButton
+        android:id="@+id/daubep_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_baseline_done_24px" />
+
+
+</RelativeLayout>

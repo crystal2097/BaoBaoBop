@@ -1,8 +1,10 @@
 package com.example.hoang.masterdetail_listview_sample;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -11,19 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
-import android.view.*;
-import android.os.AsyncTask;
-import android.content.Context;
-
 
 import com.example.hoang.masterdetail_listview_sample.DataObject.LoaiSanPham;
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
 import com.example.hoang.masterdetail_listview_sample.Interface.AddorRemoveCallbacks;
 import com.example.hoang.masterdetail_listview_sample.RecyclerAdapter.RecyclerAdapter;
-import com.example.hoang.masterdetail_listview_sample.UI.Cart_sendJson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -285,8 +283,6 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         }
 
         protected String doInBackground(String... params) {
-
-
             HttpURLConnection connection = null;
             BufferedReader reader = null;
 

@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -130,7 +128,6 @@ public class BackgroundActivity extends AsyncTask<String, Void, String> {
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
                     ((Activity) context).finish();
-
                 }
                 // Quyen nhan vien phuc vu
                 if (quyen.equals("1")) {
@@ -138,7 +135,12 @@ public class BackgroundActivity extends AsyncTask<String, Void, String> {
                     context.startActivity(intent);
                     ((Activity) context).finish();
                 }
-                // Quyen nhan vien order
+                // Quyen nhan vien bep
+                if (quyen.equals("2")) {
+                    Intent intent = new Intent(context, DauBepActivity.class);
+                    context.startActivity(intent);
+                    ((Activity) context).finish();
+                }
             } else {
                 display("Đăng nhập thất bại", "User và mật khẩu không đúng");
             }

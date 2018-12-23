@@ -6,22 +6,14 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_login.*
-import android.widget.Toast
-import android.R.attr.button
-import android.R.attr.onClick
-import android.content.Context
-import android.os.AsyncTask
 import android.widget.TextView
-import android.content.SharedPreferences
-import android.util.Log
-import com.example.hoang.masterdetail_listview_sample.R.id.*
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -54,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         val etPass = findViewById(R.id.passwordEditText) as TextView
         val btnDangNhap = findViewById(R.id.loginButton) as Button
         etPass.setText("1");
-        etUser.setText("nvpv")
+        etUser.setText("nvdb")
         btnDangNhap.setOnClickListener(
                 View.OnClickListener {
                     val stringUsername = etUser.text.toString();

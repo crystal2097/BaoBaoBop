@@ -10,20 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.hoang.masterdetail_listview_sample.DataObject.SanPham;
 import com.example.hoang.masterdetail_listview_sample.Interface.OrderAddSubClear;
 import com.example.hoang.masterdetail_listview_sample.RecyclerAdapter.RecyclerAdapter_cart;
 import com.example.hoang.masterdetail_listview_sample.UI.Cart_sendJson;
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,7 +87,6 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
                 Object result = cart_sendJson.execute(JSonArrcart).getStatus();
 
                 if (Cartketqua.getString("Ketqua", "Fail").equals("OK")) {
-
                     finish();
                 }
             }
