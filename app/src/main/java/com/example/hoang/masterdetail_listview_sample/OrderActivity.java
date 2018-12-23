@@ -129,7 +129,7 @@ public class OrderActivity extends AppCompatActivity implements AddorRemoveCallb
         MenuItem menuItem = menu.findItem(R.id.cart_action);
         menuItem.setIcon(OrderConverter.convertLayoutToImage(OrderActivity.this,cart_count,R.drawable.ic_cart));
         MenuItem menuItem2 = menu.findItem(R.id.logout);
-        menuItem2.setIcon(OrderConverter.convertLayoutToImage(OrderActivity.this,cart_count,R.drawable.ic_baseline_power_settings_new_24px));
+        menuItem2.setIcon(R.drawable.ic_baseline_power_settings_new_24px);
 
         return true;
     }

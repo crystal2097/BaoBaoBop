@@ -1,5 +1,6 @@
 package com.example.hoang.masterdetail_listview_sample;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.hoang.masterdetail_listview_sample.DataObject.ChiTietOrder;
@@ -166,5 +169,26 @@ public class DauBepActivity extends AppCompatActivity implements SetTinhTrangLis
 
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.daubep_main, menu);
+        MenuItem menuItem2 = menu.findItem(R.id.daubep_logout);
+        menuItem2.setIcon(R.drawable.ic_baseline_power_settings_new_24px);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.daubep_logout:
+                Intent intent2 = new Intent(this, LoginActivity.class);
+                startActivity(intent2);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 }
