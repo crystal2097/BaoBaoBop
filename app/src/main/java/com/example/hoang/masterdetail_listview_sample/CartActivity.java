@@ -154,14 +154,20 @@ public class CartActivity extends AppCompatActivity implements OrderAddSubClear 
 
     @Override
     public void onSubProduct(int Pos) {
-        if ((productsList.get(Pos).getSoluong() - 1) != 0)
+        if ((productsList.get(Pos).getSoluong() - 1) != 0) {
             productsList.get(Pos).setSoluong(productsList.get(Pos).getSoluong() - 1);
-        TongTien = TongTien - SubString(productsList.get(Pos).getGia());
-        updateMenuTitles(MenuTinhTong(TongTien));
+            TongTien = TongTien - SubString(productsList.get(Pos).getGia());
+            updateMenuTitles(MenuTinhTong(TongTien));
+        }
     }
 
     @Override
     public void onRemoveProduct(int Pos) {
+        int SoLuong = productsList.get(Pos).getSoluong();
+        int Gia = SubString(productsList.get(Pos).getGia());
+        TongTien = TongTien - (SoLuong * Gia);
+        updateMenuTitles(MenuTinhTong(TongTien));
+
     }
 
     public int SubString(String string) {
