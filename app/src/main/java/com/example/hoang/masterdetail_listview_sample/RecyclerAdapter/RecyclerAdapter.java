@@ -52,7 +52,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                         ((AddorRemoveCallbacks) mContext).onRemoveProduct(position);
                     }
                 } else {
-                    productsList.get(position).setAddedTocart(true);
                     if (mContext instanceof OrderActivity) {
                         ((AddorRemoveCallbacks) mContext).onAddProduct(position);
                     }

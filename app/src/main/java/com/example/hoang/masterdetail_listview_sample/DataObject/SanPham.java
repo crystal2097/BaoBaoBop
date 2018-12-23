@@ -1,10 +1,10 @@
 package com.example.hoang.masterdetail_listview_sample.DataObject;
 
-import android.os.Parcelable;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 public class SanPham implements Parcelable {
-    private int id;
+
     @SuppressWarnings("unused")
     public static final Parcelable.Creator<SanPham> CREATOR = new Parcelable.Creator<SanPham>() {
         @Override
@@ -17,30 +17,7 @@ public class SanPham implements Parcelable {
             return new SanPham[size];
         }
     };
-    private int soluong;
-    private String tensp;
-    private String gia;
-    private String imgurl;
 
-    public SanPham(int id, int soluong, String tensp, String gia, String imgurl, boolean addedTocart) {
-        this.id = id;
-        this.soluong = soluong;
-        this.tensp = tensp;
-        this.gia = gia;
-        this.imgurl = imgurl;
-        this.addedTocart = addedTocart;
-    }
-
-
-    public boolean isAddedTocart() {
-        return addedTocart;
-    }
-
-    public void setAddedTocart(boolean addedTocart) {
-        this.addedTocart = addedTocart;
-    }
-
-    private boolean addedTocart = false;
 
     public int getId() {
         return id;
@@ -49,6 +26,9 @@ public class SanPham implements Parcelable {
     public void setId(int id) {
         this.id = id;
     }
+
+    private int id;
+    private int soluong;
 
     public String getTensp() {
         return tensp;
@@ -74,17 +54,29 @@ public class SanPham implements Parcelable {
         this.imgurl = imgurl;
     }
 
+    private String tensp;
+    private String gia;
+    private String imgurl;
+    private String MaLoai;
+
     public SanPham() {
-        this.soluong = 0;
     }
 
+    public SanPham(int id, int soluong, String tensp, String gia, String imgurl, String maLoai) {
+        this.id = id;
+        this.soluong = soluong;
+        this.tensp = tensp;
+        this.gia = gia;
+        this.imgurl = imgurl;
+        MaLoai = maLoai;
+    }
     protected SanPham(Parcel in) {
         id = in.readInt();
         soluong = in.readInt();
         tensp = in.readString();
         gia = in.readString();
         imgurl = in.readString();
-        addedTocart = in.readByte() != 0x00;
+        MaLoai = in.readString();
     }
 
     public int getSoluong() {
@@ -95,9 +87,17 @@ public class SanPham implements Parcelable {
         this.soluong = soluong;
     }
 
+    public String getMaLoai() {
+        return MaLoai;
+    }
+
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public void setMaLoai(String maLoai) {
+        MaLoai = maLoai;
     }
 
     @Override
@@ -107,6 +107,6 @@ public class SanPham implements Parcelable {
         dest.writeString(tensp);
         dest.writeString(gia);
         dest.writeString(imgurl);
-        dest.writeByte((byte) (addedTocart ? 0x01 : 0x00));
+        dest.writeString(MaLoai);
     }
 }
